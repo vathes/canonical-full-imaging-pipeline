@@ -2,7 +2,10 @@ import datajoint as dj
 from djsubject import subject
 from djlab import lab
 from djimaging import imaging
+
 from my_project import db_prefix
+
+from my_project.utils import get_imaging_root_data_dir, get_scan_image_files, get_suite2p_dir
 
 # ============== Declare "lab" and "subject" schema ==============
 
@@ -43,6 +46,7 @@ imaging.declare(dj.schema(db_prefix + 'imaging'),
                 dependencies={'Session': Session,
                               'Equipment': Scanner,
                               'Location': lab.Location,
-                              'get_scan_image_files': lambda **x: "Not yet implemented",
-                              'get_suite2p_dir': lambda **x: "Not yet implemented"})
+                              'get_root_data_dir': get_imaging_root_data_dir,
+                              'get_scan_image_files': get_scan_image_files,
+                              'get_suite2p_dir': get_suite2p_dir})
 
