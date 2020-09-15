@@ -14,9 +14,5 @@ subject.Subject.insert(subjects, skip_duplicates=True)
 # ========== Insert new "ProcessingParamSet" for Suite2p ===========
 params = np.load('./ops.npy', allow_pickle=True).item()
 
-imaging.ProcessingParamSet.insert_new_params({
-    'processing_method': 'suite2p',
-    'paramset_idx': 0,
-    'paramset_desc': 'Ca-imaging analysis with Suite2p using default Suite2p ops',
-    'params': params})
-
+imaging.ProcessingParamSet.insert_new_params(
+    'suite2p', 0, 'Ca-imaging analysis with Suite2p using default Suite2p ops', params)
