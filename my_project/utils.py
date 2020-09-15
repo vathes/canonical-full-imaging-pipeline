@@ -21,9 +21,10 @@ def get_scan_image_files(scan_key):
     if subj_dir.exists():
         sess_dirs = set([fp.parent for fp in subj_dir.glob('*/*.tif')])
         for sess_folder in sess_dirs:
-            tiff_filepaths = list((subj_dir / sess_folder).glob('*.tif'))
+            tiff_filepaths = [fp.as_posix() for fp in (subj_dir / sess_folder).glob('*.tif')]
+
             try:  # attempt to read .tif as a scanimage file
-                scan = scanreader.read_scan([fp.as_posix() for fp in tiff_filepaths])
+                scan = scanreader.read_scan(tiff_filepaths)
             except Exception as e:
                 print(f'ScanImage loading error: {tiff_filepaths[0]}\n{str(e)}')
                 scan = None
