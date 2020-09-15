@@ -11,18 +11,12 @@ subjects = [{'subject': '82951', 'sex': 'F', 'subject_birth_date': '2020-05-06 1
 
 subject.Subject.insert(subjects, skip_duplicates=True)
 
-
-# ========== Insert new "ParamSet" for Suite2p ===========
-param_set_name = 'default_suite2p'
-params = ops = np.load('./ops.npy', allow_pickle=True).item()
-
-imaging.Suite2pParamSet.insert_new_params(param_set_name, params)
-
-
 # ========== Insert new "ProcessingParamSet" for Suite2p ===========
-imaging.ProcessingParamSet.insert1({'processing_method': 'suite2p',
-                                    'paramset_idx': 0,
-                                    'paramset_desc': 'Ca-imaging analysis with Suite2p using default Suite2p ops'})
-imaging.ProcessingParamSet.Suite2p.insert1({'processing_method': 'suite2p',
-                                            'paramset_idx': 0,
-                                            'param_set_name': 'default_suite2p'})
+params = np.load('./ops.npy', allow_pickle=True).item()
+
+imaging.ProcessingParamSet.insert_new_params({
+    'processing_method': 'suite2p',
+    'paramset_idx': 0,
+    'paramset_desc': 'Ca-imaging analysis with Suite2p using default Suite2p ops',
+    'params': params})
+
