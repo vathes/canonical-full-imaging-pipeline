@@ -42,9 +42,9 @@ Clone this repository from [here](https://github.com/vathes/canonical-full-imagi
     ```
 + Clone the repository:
     ```
-    clone https://github.com/vathes/canonical-full-imaging-pipeline 
+    git clone https://github.com/vathes/canonical-full-imaging-pipeline 
     ```
-+ Change directory to ***project-treadmill***
++ Change directory to ***canonical-full-imaging-pipeline***
     ```
     cd canonical-full-imaging-pipeline
     ```
