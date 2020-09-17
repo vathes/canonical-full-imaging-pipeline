@@ -166,15 +166,24 @@ Once you have your data directory configured with the above convention,
  populating the pipeline with your data amounts to these 3 steps:
  
 1. Insert meta information - modify and run this [script](my_project/insert_lookup.py) to insert meta information (e.g. subject, equipment, Suite2p analysis parameters etc.)
+
+
+    python my_project/insert_lookup.py
+
 2. Import session data - run:
+
 
     python my_project/ingestion.py
     
 3. Import clustering data and populate downstream analyses - run:
 
+
     python my_project/populate.py
+
     
-Rerun step 2 and 3 every time new subjects, sessions or clustering data become available.
+For inserting new subjects or new analysis parameters, step 1 needs to be re-executed (make sure to modify the `insert_lookup.py` with the new information)
+
+Rerun step 2 and 3 every time new sessions or clustering data become available.
 In fact, step 2 and 3 can be executed as scheduled jobs
  that will automatically process any data newly placed into the ***root_data_dir***
  

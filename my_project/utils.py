@@ -41,7 +41,7 @@ def get_suite2p_dir(processing_task_key):
     # Folder structure: root / subject / session / suite2p / plane / ops.npy
 
     tiff_filepaths = get_scan_image_files(processing_task_key)
-    sess_folder = tiff_filepaths[0].parent
+    sess_folder = pathlib.Path(tiff_filepaths[0]).parent
 
     suite2p_dirs = set([fp.parent.parent for fp in sess_folder.rglob('*ops.npy')])
 
