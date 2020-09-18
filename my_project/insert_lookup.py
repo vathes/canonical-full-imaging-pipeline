@@ -1,4 +1,4 @@
-from my_project.init_imaging import subject, imaging
+from my_project import subject, imaging
 import numpy as np
 
 

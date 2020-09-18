@@ -1,8 +1,7 @@
 import scanreader
-import uuid
 
-from my_project.init_imaging import subject, imaging, Session, Scanner
-from my_project.utils import get_imaging_root_data_dir
+from my_project import subject, imaging, Session, Scanner
+from utils.path_utils import get_imaging_root_data_dir
 
 from img_loaders import get_scanimage_acq_time, parse_scanimage_header
 
