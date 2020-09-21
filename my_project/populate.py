@@ -1,5 +1,5 @@
 import numpy as np
-from my_project.init_imaging import imaging
+from my_project import imaging
 
 populate_settings = {'reserve_jobs': True, 'suppress_errors': True, 'display_progress': True}
 

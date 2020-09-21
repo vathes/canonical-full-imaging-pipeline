@@ -6,10 +6,10 @@ Build a full imaging pipeline using the canonical pipeline elements
 + [imaging](https://github.com/vathes/canonical-imaging)
 
 This repository provides demonstrations for: 
-1. Set up a pipeline using different pipeline modules (see [here](./my_project/init_imaging.py))
+1. Set up a pipeline using different pipeline modules (see [here](./my_project/__init__.py))
 2. Ingestion of data/metadata based on:
     + predefined file/folder structure and naming convention
-    + predefined directory lookup methods (see [here](./my_project/utils.py))
+    + predefined directory lookup methods (see [here](utils/path_utils.py))
 3. Ingestion of clustering results (built-in routine from the ephys pipeline module)
 
 
@@ -42,9 +42,9 @@ Clone this repository from [here](https://github.com/vathes/canonical-full-imagi
     ```
 + Clone the repository:
     ```
-    clone https://github.com/vathes/canonical-full-imaging-pipeline 
+    git clone https://github.com/vathes/canonical-full-imaging-pipeline 
     ```
-+ Change directory to ***project-treadmill***
++ Change directory to ***canonical-full-imaging-pipeline***
     ```
     cd canonical-full-imaging-pipeline
     ```
@@ -166,15 +166,24 @@ Once you have your data directory configured with the above convention,
  populating the pipeline with your data amounts to these 3 steps:
  
 1. Insert meta information - modify and run this [script](my_project/insert_lookup.py) to insert meta information (e.g. subject, equipment, Suite2p analysis parameters etc.)
+
+
+    python my_project/insert_lookup.py
+
 2. Import session data - run:
+
 
     python my_project/ingestion.py
     
 3. Import clustering data and populate downstream analyses - run:
 
+
     python my_project/populate.py
+
     
-Rerun step 2 and 3 every time new subjects, sessions or clustering data become available.
+For inserting new subjects or new analysis parameters, step 1 needs to be re-executed (make sure to modify the `insert_lookup.py` with the new information)
+
+Rerun step 2 and 3 every time new sessions or clustering data become available.
 In fact, step 2 and 3 can be executed as scheduled jobs
  that will automatically process any data newly placed into the ***root_data_dir***
  
