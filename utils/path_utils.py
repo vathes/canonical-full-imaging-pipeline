@@ -18,23 +18,17 @@ def get_scan_image_files(scan_key):
     # Folder structure: root / subject / session / .tif (raw)
     data_dir = get_imaging_root_data_dir()
     subj_dir = data_dir / scan_key['subject']
-    if subj_dir.exists():
-        sess_dirs = set([fp.parent for fp in subj_dir.glob('*/*.tif')])
-        for sess_folder in sess_dirs:
-            tiff_filepaths = [fp.as_posix() for fp in (subj_dir / sess_folder).glob('*.tif')]
+    sess_datetime_string = scan_key['session_datetime'].strftime('%Y%m%d_%H%M%S')
+    sess_dir = subj_dir / sess_datetime_string
 
-            try:  # attempt to read .tif as a scanimage file
-                scan = scanreader.read_scan(tiff_filepaths)
-            except Exception as e:
-                print(f'ScanImage loading error: {tiff_filepaths[0]}\n{str(e)}')
-                scan = None
+    if not sess_dir.exists():
+        raise FileNotFoundError(f'Session directory not found ({sess_dir})')
 
-            if scan is not None:
-                recording_time = get_scanimage_acq_time(scan)
-
-                recording_time_diff = abs((scan_key['session_datetime'] - recording_time).total_seconds())
-                if recording_time_diff <= 120:  # safeguard that
-                    return tiff_filepaths
+    tiff_filepaths = [fp.as_posix() for fp in sess_dir.glob('*.tif')]
+    if tiff_filepaths:
+        return tiff_filepaths
+    else:
+        raise FileNotFoundError(f'No tiff file found in {sess_dir}')
 
 
 def get_suite2p_dir(processing_task_key):

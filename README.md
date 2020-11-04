@@ -153,7 +153,12 @@ root_data_dir/
 + ***root_data_dir*** is configurable in the `dj_local_conf.json`,
  under `custom/imaging_data_dir` variable
 + the ***subject*** directories must match the identifier of your subjects
-+ the ***session*** directories (no naming convention enforced), each containing:
++ the ***session*** directories must match the following naming convention:
+    
+    
+    yyyymmdd_HHMMSS (where yyyymmdd_HHMMSS is the datetime of the session)  
+    
++ and each containing:
  
     + all *.tif* files for the scan
     
