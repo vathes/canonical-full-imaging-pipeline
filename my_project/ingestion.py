@@ -44,7 +44,12 @@ def ingest():
 
     # ========== Create ProcessingTask for each scan ===========
 
-    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': 0}
+    # suite2p
+    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': 0, 'task_mode': 'load'}
+                                   for sc in imaging.Scan.fetch('KEY')])
+
+    # caiman
+    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': 1, 'task_mode': 'load'}
                                    for sc in imaging.Scan.fetch('KEY')])
 
 

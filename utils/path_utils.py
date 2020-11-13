@@ -1,12 +1,5 @@
 import datajoint as dj
 import pathlib
-import numpy as np
-import pandas as pd
-import re
-from datetime import datetime
-
-import scanreader
-from img_loaders import get_scanimage_acq_time
 
 
 def get_imaging_root_data_dir():
@@ -32,14 +25,26 @@ def get_scan_image_files(scan_key):
 
 
 def get_suite2p_dir(processing_task_key):
-    # Folder structure: root / subject / session / suite2p / plane / ops.npy
+    # Folder structure: root / subject / session / suite2p / plane / suite2p_ops.npy
 
     tiff_filepaths = get_scan_image_files(processing_task_key)
     sess_folder = pathlib.Path(tiff_filepaths[0]).parent
 
     suite2p_dirs = set([fp.parent.parent for fp in sess_folder.rglob('*ops.npy')])
-
     if len(suite2p_dirs) != 1:
-        raise FileNotFoundError(f'Error searching for Suite2p output directory - Found {suite2p_dirs}')
+        raise FileNotFoundError(f'Error searching for Suite2p output directory in {sess_folder} - Found {suite2p_dirs}')
 
     return suite2p_dirs.pop()
+
+
+def get_caiman_dir(processing_task_key):
+    # Folder structure: root / subject / session / * / *.hdf5
+
+    tiff_filepaths = get_scan_image_files(processing_task_key)
+    sess_folder = pathlib.Path(tiff_filepaths[0]).parent
+
+    caiman_dirs = set([fp.parent.parent for fp in sess_folder.rglob('*.hdf5')])
+    if len(caiman_dirs) != 1:
+        raise FileNotFoundError(f'Error searching for CaImAn output directory in {sess_folder} - Found {caiman_dirs}')
+
+    return caiman_dirs.pop()
