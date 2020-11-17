@@ -43,8 +43,7 @@ def ingest():
     imaging.Scan.insert(scans, skip_duplicates=True)
 
     # ========== Create ProcessingTask for each scan ===========
-
-    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': 0}
+    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': (imaging.ProcessingParamSet & sc).fetch1('paramset_idx')}
                                    for sc in imaging.Scan.fetch('KEY')])
 
 
