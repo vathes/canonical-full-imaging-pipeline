@@ -50,7 +50,9 @@ Clone this repository from [here](https://github.com/vathes/canonical-full-imagi
     ```
 
 ### Step 2 - setup virtual environment
-It is highly recommended (though not strictly required) to create a virtual environment to run the pipeline.
+It is highly recommended (though not strictly required) to create a virtual environment to run the pipeline.  If you are planning on running CaImAn from within this pipeline, you can install this pipeline within the conda environment created for the CaImAn installation.
+
++ Note: if `virtualenv` not yet installed, do `pip install --user virtualenv`*
 + To create a new virtual environment named ***venv***:
     ```
     virtualenv venv
@@ -64,7 +66,6 @@ It is highly recommended (though not strictly required) to create a virtual envi
         ```
         source venv/bin/activate
         ```
-*note: if `virtualenv` not yet installed, do `pip install --user virtualenv`*
 
 ### Step 3 - Install this repository
 
@@ -142,6 +143,8 @@ root_data_dir/
 │   │           │   spks.npy
 │   │           │   stat.npy
 │   │           │   ...
+│   │   └───caiman/
+│   │       │   analysis_results.hdf5
 │   └───session1/
 │   │   │   scan_0001.tif
 │   │   │   scan_0002.tif
@@ -158,32 +161,29 @@ root_data_dir/
     + all *.tif* files for the scan
     
     + one ***suite2p*** subfolder per session folder, containing the ***Suite2p*** analysis outputs
-   
-    
+
+    + one ***caiman*** subfolder per session folder, containing the ***CaImAn*** analysis output (*.hdf5)
+
 ## Running this pipeline
 
 Once you have your data directory configured with the above convention,
  populating the pipeline with your data amounts to these 3 steps:
  
-1. Insert meta information - modify and run this [script](my_project/insert_lookup.py) to insert meta information (e.g. subject, equipment, Suite2p analysis parameters etc.)
-
-
+1. Insert meta information (e.g. subject, equipment, Suite2p analysis parameters etc.) - modify and run:
+    ```
     python my_project/insert_lookup.py
-
+    ```
 2. Import session data - run:
-
-
+    ```
     python my_project/ingestion.py
-    
+    ```
 3. Import clustering data and populate downstream analyses - run:
-
-
+    ```
     python my_project/populate.py
-
+    ```
     
 For inserting new subjects or new analysis parameters, step 1 needs to be re-executed (make sure to modify the `insert_lookup.py` with the new information)
 
 Rerun step 2 and 3 every time new sessions or clustering data become available.
 In fact, step 2 and 3 can be executed as scheduled jobs
  that will automatically process any data newly placed into the ***root_data_dir***
- 

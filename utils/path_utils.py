@@ -49,3 +49,16 @@ def get_suite2p_dir(processing_task_key):
         raise FileNotFoundError(f'Error searching for Suite2p output directory - Found {suite2p_dirs}')
 
     return suite2p_dirs.pop()
+
+
+def get_caiman_dir(processing_task_key):
+    # Folder structure: root / subject / session / caiman / *.hdf5
+
+    tiff_filepaths = get_scan_image_files(processing_task_key)
+    sess_dir = pathlib.Path(tiff_filepaths[0]).parent
+    caiman_dir = sess_dir / 'caiman'
+
+    if not caiman_dir.exists():
+        raise FileNotFoundError('CaImAn directory not found at {}'.format(caiman_dir))
+
+    return caiman_dir
