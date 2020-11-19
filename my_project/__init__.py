@@ -3,7 +3,7 @@ from djsubject import subject   # canonical-colony-management
 from djlab import lab           # canonical-lab-management
 from djimaging import imaging   # canonical-imaging
 
-from utils.path_utils import get_imaging_root_data_dir, get_scan_image_files, get_suite2p_dir
+from utils.path_utils import get_imaging_root_data_dir, get_scan_image_files, get_suite2p_dir, get_caiman_dir
 
 
 if 'custom' not in dj.config:
@@ -53,4 +53,5 @@ imaging.declare(dj.schema(db_prefix + 'imaging'),
                               'Location': lab.Location,
                               'get_root_data_dir': get_imaging_root_data_dir,
                               'get_scan_image_files': get_scan_image_files,
-                              'get_suite2p_dir': get_suite2p_dir})
+                              'get_suite2p_dir': get_suite2p_dir,
+                              'get_caiman_dir': get_caiman_dir})

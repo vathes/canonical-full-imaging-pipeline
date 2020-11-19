@@ -38,13 +38,13 @@ def get_suite2p_dir(processing_task_key):
 
 
 def get_caiman_dir(processing_task_key):
-    # Folder structure: root / subject / session / * / *.hdf5
+    # Folder structure: root / subject / session / caiman / *.hdf5
 
     tiff_filepaths = get_scan_image_files(processing_task_key)
-    sess_folder = pathlib.Path(tiff_filepaths[0]).parent
+    sess_dir = pathlib.Path(tiff_filepaths[0]).parent
+    caiman_dir = sess_dir / 'caiman'
 
-    caiman_dirs = set([fp.parent.parent for fp in sess_folder.rglob('*.hdf5')])
-    if len(caiman_dirs) != 1:
-        raise FileNotFoundError(f'Error searching for CaImAn output directory in {sess_folder} - Found {caiman_dirs}')
+    if not caiman_dir.exists():
+        raise FileNotFoundError('CaImAn directory not found at {}'.format(caiman_dir))
 
-    return caiman_dirs.pop()
+    return caiman_dir
