@@ -42,9 +42,16 @@ def ingest():
     Session.insert(sessions, skip_duplicates=True)
     imaging.Scan.insert(scans, skip_duplicates=True)
 
-    # ========== Create ProcessingTask for each scan and each parameter set ===========
-    imaging.ProcessingTask.insert([{**sc_key, 'paramset_idx': (imaging.ProcessingParamSet & pps_key).fetch1('paramset_idx')}
-                                   for sc_key in imaging.Scan.fetch('KEY') for pps_key in imaging.ProcessingParamSet.fetch('KEY')])
+    # ========== Create ProcessingTask for each scan ===========
+
+    # suite2p
+    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': 0, 'task_mode': 'load'}
+                                   for sc in imaging.Scan.fetch('KEY')])
+
+    # caiman
+    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': 1, 'task_mode': 'load'}
+                                   for sc in imaging.Scan.fetch('KEY')])
+
 
 if __name__ == '__main__':
     ingest()
