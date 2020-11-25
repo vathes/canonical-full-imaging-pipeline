@@ -1,8 +1,7 @@
 import scanreader
-import uuid
 
-from my_project.init_imaging import subject, imaging, Session, Scanner
-from my_project.utils import get_imaging_root_data_dir
+from my_project import subject, imaging, Session, Scanner
+from utils.path_utils import get_imaging_root_data_dir
 
 from img_loaders import get_scanimage_acq_time, parse_scanimage_header
 
@@ -45,8 +44,12 @@ def ingest():
 
     # ========== Create ProcessingTask for each scan ===========
 
-    imaging.ProcessingTask.insert([{**sc, 'processing_instance': uuid.uuid4(),
-                                    'processing_method': 'suite2p', 'paramset_idx': 0}
+    # suite2p
+    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': 0, 'task_mode': 'load'}
+                                   for sc in imaging.Scan.fetch('KEY')])
+
+    # caiman
+    imaging.ProcessingTask.insert([{**sc, 'paramset_idx': 1, 'task_mode': 'load'}
                                    for sc in imaging.Scan.fetch('KEY')])
 
 
